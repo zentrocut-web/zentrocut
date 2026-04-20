@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentrocut — Social Media Management Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050507;
+    --surface: #0d0d12;
+    --surface2: #13131a;
+    --accent: #c8f535;
+    --accent2: #7b5ef8;
+    --accent3: #f53579;
+    --text: #f0f0f5;
+    --muted: #6b6b7e;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: exclusion;
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease, top 0.15s ease, width 0.3s, height 0.3s, border-color 0.3s;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 5%;
+    background: rgba(5,5,7,0.85);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.8s ease both;
+  }
+  @keyframes fadeDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #050507;
+    font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.65rem 1.5rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover { background: #d4f94f; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 10rem 5% 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,245,53,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,245,53,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { from { background-position: 0 0; } to { background-position: 60px 60px; } }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(123,94,248,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: glowPulse 6s ease-in-out infinite alternate;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,245,53,0.1) 0%, transparent 70%);
+    bottom: 50px; left: 10%;
+    border-radius: 50%;
+    animation: glowPulse 8s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes glowPulse { from { opacity: 0.5; transform: scale(1); } to { opacity: 1; transform: scale(1.15); } }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(200,245,53,0.08);
+    border: 1px solid rgba(200,245,53,0.25);
+    color: var(--accent);
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.5rem; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+  .hero-title .line2 { color: var(--accent); -webkit-text-stroke: 0px; }
+  .hero-title .outline {
+    -webkit-text-stroke: 1.5px rgba(240,240,245,0.3);
+    color: transparent;
+  }
+
+  .hero-sub {
+    max-width: 520px;
+    font-size: 1.1rem; line-height: 1.7; color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #050507;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none; cursor: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 0 0 rgba(200,245,53,0);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.4s;
+  }
+  .btn-primary:hover::after { transform: translateX(120%) skewX(-15deg); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(200,245,53,0.35); }
+
+  .btn-ghost {
+    color: var(--text);
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.6rem;
+    transition: gap 0.3s, color 0.3s;
+  }
+  .btn-ghost:hover { gap: 1rem; color: var(--accent); }
+  .btn-ghost .arrow { font-size: 1.2rem; }
+
+  .hero-stats {
+    display: flex; gap: 4rem; margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 1s ease 1s both;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--accent); line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+
+  /* MARQUEE */
+  .marquee-section {
+    padding: 1.5rem 0;
+    background: var(--accent);
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.15em;
+    color: #050507;
+    display: flex; align-items: center; gap: 1rem; flex-shrink: 0;
+  }
+  .marquee-dot { width: 6px; height: 6px; background: #050507; border-radius: 50%; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section { padding: 7rem 5%; }
+
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* SERVICES */
+  .services { background: var(--surface); }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+  }
+  .services-desc { max-width: 380px; color: var(--muted); line-height: 1.7; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s;
+    cursor: none;
+  }
+  .service-card:hover { background: var(--surface2); }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 2.2rem; margin-bottom: 1.5rem;
+    display: block;
+  }
+  .service-num {
+    position: absolute; top: 2rem; right: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+  .service-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  .service-tag {
+    display: inline-block; margin-top: 1.5rem;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,245,53,0.25);
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+  }
+
+  /* HOW IT WORKS */
+  .process { background: var(--bg); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 3rem; margin-top: 4rem;
+  }
+  .step {
+    position: relative;
+  }
+  .step-line {
+    position: absolute; top: 28px; left: 60px; right: -3rem;
+    height: 1px; background: var(--border);
+  }
+  .step:last-child .step-line { display: none; }
+  .step-num {
+    width: 56px; height: 56px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    background: var(--bg);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .step:hover .step-num { background: var(--accent); color: #050507; border-color: var(--accent); }
+  .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .step-text { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+  /* WHY US */
+  .whyus { background: var(--surface); }
+  .whyus-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .whyus-visual {
+    position: relative; height: 500px;
+  }
+  .whyus-card {
+    position: absolute;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+  }
+  .wc1 { top: 0; left: 0; width: 260px; }
+  .wc2 { top: 120px; right: 0; width: 220px; }
+  .wc3 { bottom: 60px; left: 30px; width: 200px; }
+  .wc4 { bottom: 0; right: 20px; width: 230px; }
+  .wc-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.4rem; }
+  .wc-val { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--accent); line-height: 1; }
+  .wc-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+  .wc-bar { height: 4px; background: var(--border); border-radius: 10px; margin-top: 0.8rem; overflow: hidden; }
+  .wc-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; transition: width 1.5s ease; }
+
+  .whyus-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+  .why-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .why-item:hover { border-color: rgba(200,245,53,0.3); background: rgba(200,245,53,0.03); }
+  .why-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .why-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .why-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--bg); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .testi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-5px); border-color: rgba(200,245,53,0.25); }
+  .testi-stars { color: var(--accent); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .testi-text { font-size: 0.92rem; color: #c5c5d0; line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
+  .testi-author { display: flex; align-items: center; gap: 0.85rem; }
+  .testi-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: white;
+  }
+  .testi-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
+  .testi-role { font-size: 0.75rem; color: var(--muted); }
+
+  /* PRICING */
+  .pricing { background: var(--surface); }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .price-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.5rem;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .price-card.featured {
+    background: var(--surface2);
+    border-color: var(--accent);
+  }
+  .price-card:hover:not(.featured) { transform: translateY(-5px); border-color: rgba(200,245,53,0.3); }
+  .price-badge {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: var(--accent); color: #050507;
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.25rem 0.65rem; border-radius: 2px;
+  }
+  .price-plan { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: var(--text); line-height: 1; margin-bottom: 0.3rem;
+  }
+  .price-amount span { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; font-weight: 300; color: var(--muted); }
+  .price-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.5; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .price-features li { font-size: 0.88rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+  .price-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .price-features li.off { color: var(--muted); }
+  .price-features li.off::before { content: '✕'; color: var(--muted); }
+  .price-btn {
+    display: block; text-align: center; text-decoration: none;
+    padding: 0.9rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+    border-radius: 4px;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .price-card.featured .price-btn {
+    background: var(--accent); color: #050507; border-color: var(--accent);
+  }
+  .price-btn:hover { background: var(--accent); color: #050507; border-color: var(--accent); }
+
+  /* CTA BAND */
+  .cta-band {
+    background: var(--accent);
+    padding: 5rem 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: 'GROW';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20rem; line-height: 1;
+    color: rgba(0,0,0,0.07);
+    position: absolute; right: -2rem; top: -3rem;
+    pointer-events: none; white-space: nowrap;
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: #050507;
+    line-height: 1;
+  }
+  .cta-sub { font-size: 1rem; color: rgba(5,5,7,0.65); max-width: 420px; line-height: 1.65; margin-top: 0.7rem; }
+  .btn-dark {
+    background: #050507; color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 1rem 2.5rem; border-radius: 3px;
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+    flex-shrink: 0;
+  }
+  .btn-dark:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+
+  /* CONTACT */
+  .contact { background: var(--surface); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1.3fr; gap: 6rem; align-items: flex-start; }
+  .contact-info-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+  .contact-info-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 2.5rem; }
+  .contact-detail {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .c-item { display: flex; gap: 1rem; align-items: center; }
+  .c-icon {
+    width: 44px; height: 44px; background: rgba(200,245,53,0.08);
+    border: 1px solid rgba(200,245,53,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .c-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.15rem; }
+  .c-val { font-size: 0.92rem; color: var(--text); font-weight: 500; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  input, textarea, select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: rgba(200,245,53,0.5);
+    box-shadow: 0 0 0 3px rgba(200,245,53,0.07);
+  }
+  textarea { min-height: 130px; }
+  select option { background: var(--surface); }
+  .form-submit {
+    background: var(--accent);
+    color: #050507;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 1rem; border: none; border-radius: 4px;
+    cursor: none; transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(200,245,53,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    padding: 4rem 5% 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .logo { display: block; margin-bottom: 1rem; text-decoration: none; }
+  .footer-tagline { font-size: 0.85rem; color: var(--muted); max-width: 240px; line-height: 1.6; }
+  .footer-col-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-social { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; text-decoration: none; color: var(--muted);
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+  }
+  .social-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,245,53,0.07); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .footer-bottom a { color: var(--accent); text-decoration: none; }
+
+  /* SCROLL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .whyus-inner { grid-template-columns: 1fr; }
+    .whyus-visual { height: 300px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+    .step-line { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hero-title { font-size: 3.5rem; }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+    .pricing-grid, .testi-grid, .services-grid { grid-template-columns: 1fr; }
+    .cta-band { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">ZENTRO<span>CUT</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-badge">✦ Social Media Management Agency</div>
+
+  <h1 class="hero-title">
+    WE MAKE<br>
+    <span class="line2">BRANDS</span><br>
+    <span class="outline">UNMISSABLE</span>
+  </h1>
+
+  <p class="hero-sub">
+    Zentrocut transforms your social presence into a growth engine. Strategic content, data-driven campaigns, and obsessive execution — all under one roof.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Book Free Strategy Call</a>
+    <a href="#services" class="btn-ghost"><span>Explore Services</span><span class="arrow">→</span></a>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Brands Grown</div>
+    </div>
+    <div>
+      <div class="stat-num">8M+</div>
+      <div class="stat-label">Reach Generated</div>
+    </div>
+    <div>
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Client Rating</div>
+    </div>
+    <div>
+      <div class="stat-num">3×</div>
+      <div class="stat-label">Avg. Engagement Boost</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Instagram Growth<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Content Creation<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Paid Advertising<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Brand Strategy<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Influencer Marketing<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Analytics & Reporting<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Community Management<span class="marquee-dot"></span></span>
+    <span class="marquee-item">SEO Optimization<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Instagram Growth<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Content Creation<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Paid Advertising<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Brand Strategy<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Influencer Marketing<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Analytics & Reporting<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Community Management<span class="marquee-dot"></span></span>
+    <span class="marquee-item">SEO Optimization<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Services Built<br>for Results</h2>
+    </div>
+    <p class="services-desc">Every service we offer is designed with one goal: measurable growth for your brand across every platform that matters.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <span class="service-icon">📱</span>
+      <div class="service-title">Social Media Management</div>
+      <p class="service-desc">Full-scale management of Instagram, Facebook, LinkedIn, X, and more. Consistent posting, community engagement, and brand voice development.</p>
+      <span class="service-tag">All Platforms</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <span class="service-icon">🎨</span>
+      <div class="service-title">Content Creation</div>
+      <p class="service-desc">Scroll-stopping visuals, Reels, carousels, and copywriting that converts. Professionally designed content tailored to your brand identity.</p>
+      <span class="service-tag">Design + Copy</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <span class="service-icon">📣</span>
+      <div class="service-title">Paid Ad Campaigns</div>
+      <p class="service-desc">Meta Ads, Google Ads, and YouTube campaigns engineered for ROI. A/B testing, audience targeting, and continuous optimization.</p>
+      <span class="service-tag">Performance</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <span class="service-icon">🤝</span>
+      <div class="service-title">Influencer Marketing</div>
+      <p class="service-desc">We connect your brand with the right voices. End-to-end influencer sourcing, briefing, and campaign tracking across niches.</p>
+      <span class="service-tag">Collaborations</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">05</span>
+      <span class="service-icon">📊</span>
+      <div class="service-title">Analytics & Reporting</div>
+      <p class="service-desc">Monthly reports that actually make sense. KPI tracking, competitor benchmarking, and strategic recommendations based on real data.</p>
+      <span class="service-tag">Data-Driven</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">06</span>
+      <span class="service-icon">🔥</span>
+      <div class="service-title">Brand Strategy</div>
+      <p class="service-desc">Deep-dive brand audits, persona development, and positioning workshops that define your digital identity and set the foundation for growth.</p>
+      <span class="service-tag">Foundation</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="reveal">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">From Onboarding<br>to Dominance</h2>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-line"></div>
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <p class="step-text">We learn about your brand, goals, audience, and competition. No cookie-cutter plans — every strategy starts here.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-line"></div>
+      <div class="step-num">02</div>
+      <div class="step-title">Strategy Blueprint</div>
+      <p class="step-text">Our team builds a custom 90-day roadmap with platform selection, content pillars, and campaign frameworks.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-line"></div>
+      <div class="step-num">03</div>
+      <div class="step-title">Execution Sprint</div>
+      <p class="step-text">We go live — content created, scheduled, published, and ads launched with precision targeting.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-title">Optimize & Scale</div>
+      <p class="step-text">Weekly performance reviews, monthly strategy pivots, and continuous improvement to amplify what's working.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="whyus">
+  <div class="whyus-inner">
+    <div class="whyus-visual reveal">
+      <div class="whyus-card wc1">
+        <div class="wc-label">Avg. Follower Growth</div>
+        <div class="wc-val">+340%</div>
+        <div class="wc-sub">Within first 3 months</div>
+        <div class="wc-bar"><div class="wc-bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="whyus-card wc2">
+        <div class="wc-label">Engagement Rate</div>
+        <div class="wc-val">6.8%</div>
+        <div class="wc-sub">Industry avg: 1.2%</div>
+        <div class="wc-bar"><div class="wc-bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="whyus-card wc3">
+        <div class="wc-label">Campaigns Launched</div>
+        <div class="wc-val">500+</div>
+        <div class="wc-sub">Across 12 industries</div>
+      </div>
+      <div class="whyus-card wc4">
+        <div class="wc-label">Ad Spend Managed</div>
+        <div class="wc-val">₹2Cr+</div>
+        <div class="wc-sub">With positive ROI</div>
+        <div class="wc-bar"><div class="wc-bar-fill" style="width:65%"></div></div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="section-label">Why Zentrocut</div>
+      <h2 class="section-title">We're Not Just<br>Another Agency</h2>
+      <div class="whyus-list">
+        <div class="why-item">
+          <span class="why-icon">⚡</span>
+          <div>
+            <div class="why-title">Speed Without Compromise</div>
+            <p class="why-text">Campaigns go live in 72 hours. We move fast because in social media, timing is everything.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">🎯</span>
+          <div>
+            <div class="why-title">Hyper-Targeted Approach</div>
+            <p class="why-text">We don't spray and pray. Every post, ad, and campaign is built around data-backed audience insights.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">🔍</span>
+          <div>
+            <div class="why-title">Full Transparency</div>
+            <p class="why-text">Real-time dashboards. No fluff reports. You always know exactly what we're doing and why.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">🧠</span>
+          <div>
+            <div class="why-title">Senior Strategists Only</div>
+            <p class="why-text">Your brand is never passed off to interns. Dedicated senior strategists on every account.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="reveal">
+    <div class="section-label">Client Love</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Zentrocut took our Instagram from 2K to 45K followers in just 4 months. Their content strategy is next level — every post feels on-brand and genuinely engaging."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">RK</div>
+        <div>
+          <div class="testi-name">Rahul Kapoor</div>
+          <div class="testi-role">Founder, FreshBrew Co.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The ROI from their paid ads has been remarkable. Our cost per lead dropped by 60% and conversions tripled within the first campaign. Highly recommend Zentrocut."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">PS</div>
+        <div>
+          <div class="testi-name">Priya Sharma</div>
+          <div class="testi-role">CMO, StyleNest India</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Working with Zentrocut felt like having an in-house marketing team. Professional, responsive, and always ahead of trends. Our brand awareness skyrocketed."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AM</div>
+        <div>
+          <div class="testi-name">Arjun Mehta</div>
+          <div class="testi-role">CEO, Techwave Solutions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <div class="section-label">Transparent Pricing</div>
+    <h2 class="section-title">Simple Plans,<br>Real Results</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">Starter</div>
+      <div class="price-amount">₹9,999<span>/mo</span></div>
+      <p class="price-desc">Perfect for small businesses and personal brands getting started on social media.</p>
+      <ul class="price-features">
+        <li>2 Platforms Managed</li>
+        <li>12 Posts / Month</li>
+        <li>Basic Graphic Design</li>
+        <li>Monthly Report</li>
+        <li>Community Management</li>
+        <li class="off">Paid Ad Campaigns</li>
+        <li class="off">Influencer Outreach</li>
+      </ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-badge">Most Popular</div>
+      <div class="price-plan">Growth</div>
+      <div class="price-amount">₹24,999<span>/mo</span></div>
+      <p class="price-desc">For growing brands that need serious, results-driven social media management.</p>
+      <ul class="price-features">
+        <li>4 Platforms Managed</li>
+        <li>25 Posts + Reels / Month</li>
+        <li>Premium Content Design</li>
+        <li>Bi-Weekly Reports</li>
+        <li>Community Management</li>
+        <li>₹10K Ad Budget Managed</li>
+        <li class="off">Influencer Outreach</li>
+      </ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-plan">Elite</div>
+      <div class="price-amount">₹59,999<span>/mo</span></div>
+      <p class="price-desc">Full-scale social media dominance for established brands ready to lead their market.</p>
+      <ul class="price-features">
+        <li>All Platforms Managed</li>
+        <li>Unlimited Content</li>
+        <li>Video Production</li>
+        <li>Weekly Strategy Calls</li>
+        <li>Full Community Management</li>
+        <li>Unlimited Ad Budget</li>
+        <li>Influencer Outreach</li>
+      </ul>
+      <a href="#contact" class="price-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div>
+    <h2 class="cta-title">Ready to Stand<br>Out Online?</h2>
+    <p class="cta-sub">Book a free 30-minute strategy call and find out exactly how Zentrocut can grow your brand.</p>
+  </div>
+  <a href="#contact" class="btn-dark">Book Free Call →</a>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Let's Build<br>Something Big</h2>
+      <p class="contact-info-desc">Reach out and one of our strategists will get back to you within 24 hours. No hard sell — just a genuine conversation about your goals.</p>
+      <div class="contact-detail">
+        <div class="c-item">
+          <div class="c-icon">✉️</div>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-val">zentrocut@gmail.com</div>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">📞</div>
+          <div>
+            <div class="c-label">Phone / WhatsApp</div>
+            <div class="c-val">+91 94310 53993</div>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">⏰</div>
+          <div>
+            <div class="c-label">Response Time</div>
+            <div class="c-val">Within 24 hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Rahul Kumar" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX">
+          </div>
+          <div class="form-group">
+            <label for="service">Service Interested In</label>
+            <select id="service">
+              <option value="">Select a service</option>
+              <option>Social Media Management</option>
+              <option>Content Creation</option>
+              <option>Paid Advertising</option>
+              <option>Influencer Marketing</option>
+              <option>Brand Strategy</option>
+              <option>Full Package</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell Us About Your Brand</label>
+          <textarea id="message" placeholder="Share your goals, current challenges, and what success looks like for you..."></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">ZENTRO<span>CUT</span></a>
+      <p class="footer-tagline">Making brands unmissable — one strategy at a time.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">📷</a>
+        <a href="#" class="social-btn">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Social Media Management</a></li>
+        <li><a href="#services">Content Creation</a></li>
+        <li><a href="#services">Paid Advertising</a></li>
+        <li><a href="#services">Influencer Marketing</a></li>
+        <li><a href="#services">Brand Strategy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:zentrocut@gmail.com">zentrocut@gmail.com</a></li>
+        <li><a href="tel:+919431053993">+91 94310 53993</a></li>
+        <li><a href="#">WhatsApp Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Zentrocut. All rights reserved.</span>
+    <span>Crafted with ♥ for brands that mean business</span>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    ring.style.left = mouseX + 'px';
+    ring.style.top = mouseY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .service-card, .price-card, .why-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.width = '60px'; ring.style.height = '60px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px';
+      ring.style.width = '40px'; ring.style.height = '40px';
+    });
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 100);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FORM SUBMIT
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+    setTimeout(() => {
+      btn.textContent = '✓ Message Sent! We\'ll contact you soon.';
+      btn.style.background = '#4ade80';
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.style.opacity = '1';
+        e.target.reset();
+      }, 4000);
+    }, 1500);
+  }
+
+  // NAV active on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(5,5,7,0.98)'
+      : 'rgba(5,5,7,0.85)';
+  });
+</script>
+</body>
+</html>
